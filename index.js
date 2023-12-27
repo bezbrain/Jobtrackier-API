@@ -1,7 +1,9 @@
 const express = require("express");
 require("dotenv").config();
 require("express-async-errors");
+const authMiddleware = require("./middleware/auth");
 const authRouter = require("./routes/auth.route");
+const jobRouter = require("./routes/job.route");
 const NotFoundMiddleware = require("./middleware/not-found");
 const ErrorHandlerMiddleware = require("./middleware/error-handler");
 const connectDB = require("./db/connect");
@@ -18,6 +20,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/jobs", authMiddleware, jobRouter);
 
 app.use(NotFoundMiddleware);
 app.use(ErrorHandlerMiddleware);
