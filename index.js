@@ -4,6 +4,7 @@ require("express-async-errors");
 const authRouter = require("./routes/auth.route");
 const NotFoundMiddleware = require("./middleware/not-found");
 const ErrorHandlerMiddleware = require("./middleware/error-handler");
+const connectDB = require("./db/connect");
 const app = express();
 
 // The dynamic port
@@ -21,7 +22,12 @@ app.use(ErrorHandlerMiddleware);
 
 // Start db
 const startDB = async () => {
-  app.listen(port, console.log(`Server is listening on port ${port}`));
+  try {
+    await connectDB(process.env.MONGO_URI);
+    app.listen(port, console.log(`Server is listening on port ${port}`));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 startDB();
