@@ -36,7 +36,7 @@ const port = process.env.PORT || 3000;
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("This is the home page");
+  res.send("<h2>Home page</h2><a href='/api-docs'>Go To Docs</a>");
 });
 
 app.use("/api/v1/auth", authRouter);
