@@ -1,8 +1,16 @@
 const UserCollection = require("../models/User");
+const { StatusCodes } = require("http-status-codes");
 
 const signup = async (req, res) => {
   const user = await UserCollection.create(req.body);
-  res.send("Please Register");
+
+  const token = user.createJWT();
+
+  res.status(StatusCodes.CREATED).json({
+    success: true,
+    message: "User created successfully",
+    token,
+  });
 };
 
 const signin = async (req, res) => {

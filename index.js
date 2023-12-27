@@ -7,6 +7,8 @@ const ErrorHandlerMiddleware = require("./middleware/error-handler");
 const connectDB = require("./db/connect");
 const app = express();
 
+app.use(express.json());
+
 // The dynamic port
 const port = process.env.PORT || 3000;
 
