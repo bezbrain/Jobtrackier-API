@@ -8,6 +8,11 @@ const cors = require("cors");
 const xss = require("xss-clean");
 const rateLimiter = require("express-rate-limit");
 
+// Swagger
+const swaggerUI = require("swagger-ui-express");
+const YAML = require("yamljs");
+const swaggerDocs = YAML.load("./swagger.yaml");
+
 const authMiddleware = require("./middleware/auth");
 const authRouter = require("./routes/auth.route");
 const jobRouter = require("./routes/job.route");
@@ -36,8 +41,11 @@ const port = process.env.PORT || 3000;
 
 // Routes
 app.get("/", (req, res) => {
-  res.send("<h2>Home page</h2><a href='/api-docs'>Go To Docs</a>");
+  res.send("<h2>Home page</h2><a href='/jobtrackier-api'>Go To Docs</a>");
 });
+
+// Serve docs
+app.use("/jobtrackier-api", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/jobs", authMiddleware, jobRouter);

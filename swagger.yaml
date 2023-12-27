@@ -1,0 +1,117 @@
+openapi: 3.0.3
+info:
+  title: Jobtrackier
+  contact: {}
+  version: "1.0"
+
+servers:
+  - url: https://jobtrackier.onrender.com/api/v1
+    variables: {}
+paths:
+  /auth/signup:
+    post:
+      tags:
+        - Auth
+      summary: Signup User
+      operationId: SignupUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/SignupUserRequest"
+
+            example:
+              username: quadri
+              email: quad@gmail.com
+              password: secret
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+    parameters: []
+  /auth/signin:
+    post:
+      tags:
+        - Auth
+      summary: Signin User
+      operationId: SigninUser
+      parameters: []
+      requestBody:
+        description: ""
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: "#/components/schemas/SigninUserRequest"
+
+            example:
+              email: olawale@gmail.com
+              password: secret
+        required: true
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security: []
+    parameters: []
+  /jobs:
+    post:
+      tags:
+        - Jobs
+      summary: Jobs Created
+      operationId: JobsCreated
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    parameters: []
+components:
+  schemas:
+    SignupUserRequest:
+      title: SignupUserRequest
+      required:
+        - username
+        - email
+        - password
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+
+    SigninUserRequest:
+      title: SigninUserRequest
+      required:
+        - email
+        - password
+      type: object
+      properties:
+        email:
+          type: string
+        password:
+          type: string
+
+  securitySchemes:
+    bearer:
+      type: http
+      scheme: bearer
+security: []
+tags:
+  - name: Auth
+    description: ""
+  - name: Jobs
+    description: ""
