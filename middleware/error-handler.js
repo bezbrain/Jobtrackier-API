@@ -16,6 +16,14 @@ const ErrorHandlerMiddleware = (err, req, res, next) => {
     customError.statusCode = StatusCodes.BAD_REQUEST;
   }
 
+  //   Duplicated error
+  if (err.code === 11000) {
+    const errorValue = Object.keys(err.keyValue)[0];
+    // console.log(errorValue);
+    customError.message = `${errorValue} already existed. Please use another ${errorValue}`;
+    customError.statusCode = StatusCodes.UNAUTHORIZED;
+  }
+
   res.status(customError.statusCode).json({
     success: false,
     message: customError.message,
