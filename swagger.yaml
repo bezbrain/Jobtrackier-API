@@ -61,6 +61,22 @@ paths:
       deprecated: false
       security: []
     parameters: []
+  /auth/logout:
+    post:
+      tags:
+        - Auth
+      summary: Logout User
+      operationId: LogoutUser
+      parameters: []
+      responses:
+        "200":
+          description: ""
+          headers: {}
+      deprecated: false
+      security:
+        - bearer: []
+    parameters: []
+
   /jobs:
     post:
       tags:
