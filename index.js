@@ -1,13 +1,20 @@
 const express = require("express");
 require("dotenv").config();
 require("express-async-errors");
+const authRouter = require("./routes/auth.route");
 const NotFoundMiddleware = require("./middleware/not-found");
 const ErrorHandlerMiddleware = require("./middleware/error-handler");
+const app = express();
 
 // The dynamic port
 const port = process.env.PORT || 3000;
 
-const app = express();
+// Routes
+app.get("/", (req, res) => {
+  res.send("This is the home page");
+});
+
+app.use("/api/v1/auth", authRouter);
 
 app.use(NotFoundMiddleware);
 app.use(ErrorHandlerMiddleware);
