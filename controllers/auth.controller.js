@@ -59,6 +59,10 @@ const logout = async (req, res) => {
     headers: { authorization },
   } = req;
 
+  if (!authorization) {
+    throw new BadRequestError("Logout was not successful");
+  }
+
   const getToken = authorization.split(" ")[1];
 
   revokedTokens.push(getToken);
