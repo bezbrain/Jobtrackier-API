@@ -1,4 +1,6 @@
+const { revokedTokens } = require("../controllers/auth.controller");
 const UnauthenticatedError = require("../errors/unauthenticated");
+const ForbiddenError = require("../errors/forbidden");
 const jwt = require("jsonwebtoken");
 
 const authMiddleware = async (req, res, next) => {
@@ -12,6 +14,11 @@ const authMiddleware = async (req, res, next) => {
   }
 
   const getToken = authorization.split(" ")[1];
+
+  // Check if token is not revoked yet
+  if (revokedTokens.includes(getToken)) {
+    throw new ForbiddenError("Forbidden: Token has been revoked");
+  }
 
   try {
     const payload = jwt.verify(getToken, process.env.JWT_SECRET);
