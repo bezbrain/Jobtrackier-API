@@ -1,4 +1,5 @@
 const UnauthenticatedError = require("../errors/unauthenticated");
+const jwt = require("jsonwebtoken");
 
 const authMiddleware = async (req, res, next) => {
   const {
@@ -10,7 +11,7 @@ const authMiddleware = async (req, res, next) => {
     throw new UnauthenticatedError("User unauthorized");
   }
 
-  const getToken = authorization.split(",")[1];
+  const getToken = authorization.split(" ")[1];
 
   try {
     const payload = jwt.verify(getToken, process.env.JWT_SECRET);
